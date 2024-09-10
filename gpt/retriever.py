@@ -9,13 +9,13 @@ from langchain.storage import LocalFileStore
 from langchain.embeddings import CacheBackedEmbeddings
 
 def _parse_page(soup):
-    header = soup.find("header")
-    footer = soup.find("footer")
+    # header = soup.find("header")
+    # footer = soup.find("footer")
     
-    header.decompose() if header else "Header not found"
-    footer.decompose() if footer else "Footer not found"
+    # header.decompose() if header else "Header not found"
+    # footer.decompose() if footer else "Footer not found"
 
-    return re.sub(r'[\n, \xa0, CloseSearch Submit Blog]', ' ', soup.get_text())
+    return (str(soup.get_text()).replace('\n','').replace('\xa0', ''))
     
 def get_retriever_after_embedding(url, api_key):
     split_docs = _get_split_docs(url)

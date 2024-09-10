@@ -8,10 +8,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.storage import LocalFileStore
 from langchain.embeddings import CacheBackedEmbeddings
 
-import streamlit as st
-
 def _parse_page(soup):
-    st.write(soup)
     header = soup.find("header")
     footer = soup.find("footer")
     
@@ -27,7 +24,6 @@ def get_retriever_after_embedding(url, api_key):
     return vector_store.as_retriever()
 
 def _get_split_docs(url):
-    st.write(url)
     splitter = RecursiveCharacterTextSplitter().from_tiktoken_encoder(
         chunk_size=1000,
         chunk_overlap=200

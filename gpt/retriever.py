@@ -50,4 +50,4 @@ def _get_cached_embeddings(url, api_key):
     return CacheBackedEmbeddings(embedding, file_store)
     
 def _sanitize_url(url):
-    return re.sub(r'[\\/*?:"<>|]', '', url)
+    return re.sub(r'[\\/*?:"<>|.-]', '', url)

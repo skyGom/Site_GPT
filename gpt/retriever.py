@@ -1,5 +1,4 @@
 import os
-import re
 
 from langchain.document_loaders import SitemapLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -7,6 +6,8 @@ from langchain.vectorstores.faiss import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.storage import LocalFileStore
 from langchain.embeddings import CacheBackedEmbeddings
+
+from utility.url import extract_site_name
 
 import streamlit as st
 
@@ -37,11 +38,10 @@ def _get_split_docs(url):
                                         r"^(.*\/workers-ai\/).*",],
                            parsing_function=_parse_page)
     loader.requests_per_second = 2
-    loader.requests_kwargs = {"verify": False}
     return loader.load_and_split(text_splitter=splitter)
 
 def _get_cached_embeddings(url, api_key):
-    embedding_cache_dir = f'./.cache/embeddings/{_sanitize_url(url)}'
+    embedding_cache_dir = f'./.cache/embeddings/{extract_site_name(url)}'
     
     if not os.path.exists(embedding_cache_dir):
         os.makedirs(embedding_cache_dir)
@@ -51,6 +51,3 @@ def _get_cached_embeddings(url, api_key):
     )
     file_store = LocalFileStore(embedding_cache_dir)
     return CacheBackedEmbeddings(embedding, file_store)
-    
-def _sanitize_url(url):
-    return re.sub(r'[\\/*?:"<>|.-]', '', url)

@@ -13,3 +13,7 @@ def ensure_sitemap_url(url):
         return urlunparse(updated_url)
     
     return url
+
+def extract_site_name(url):
+    parsed_url = urlparse(url)
+    return parsed_url.netloc

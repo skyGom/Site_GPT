@@ -40,7 +40,7 @@ with st.sidebar:
                     st.warning("API key is not valid. Try again.")
     
     url = st.text_input("Write down a URL", placeholder="https://www.example.com/sitemap.xml")
-    st.link_button("Git repository", "https://platform.openai.com/account/api-keys")
+    st.link_button("Git repository", "https://github.com/skyGom/Site_GPT")
     
 if url and st.session_state["api_key"]:
     llm = create_llm(st.session_state.api_key)

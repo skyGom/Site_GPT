@@ -8,6 +8,8 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.storage import LocalFileStore
 from langchain.embeddings import CacheBackedEmbeddings
 
+import streamlit as st
+
 def _parse_page(soup):
     # header = soup.find("header")
     # footer = soup.find("footer")
@@ -20,6 +22,7 @@ def _parse_page(soup):
 def get_retriever_after_embedding(url, api_key):
     split_docs = _get_split_docs(url)
     cached_embeddings = _get_cached_embeddings(url, api_key)
+    st.write(split_docs)
     vector_store = FAISS.from_documents(split_docs, cached_embeddings)
     return vector_store.as_retriever()
 

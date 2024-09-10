@@ -17,7 +17,7 @@ def _parse_page(soup):
     # header.decompose() if header else "Header not found"
     # footer.decompose() if footer else "Footer not found"
 
-    return (str(soup.get_text()).replace('\n','').replace('\xa0', '').replace('|',''),)
+    return (str(soup.get_text()).replace('\n','').replace('\xa0', '').replace('|',''))
     
 def get_retriever_after_embedding(url, api_key):
     split_docs = _get_split_docs(url)

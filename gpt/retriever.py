@@ -16,7 +16,7 @@ def _parse_page(soup):
     # header.decompose() if header else "Header not found"
     # footer.decompose() if footer else "Footer not found"
 
-    return (str(soup.get_text()).replace('\n','').replace('\xa0', '').replace('|','').replace('|','').replace('↗', ' ').replace('@',''))
+    return (str(soup.get_text()).replace('\n','').replace('\xa0', '').replace('|','').replace('↗', ' ').replace('@',''))
     
 def get_retriever_after_embedding(url, api_key):
     split_docs = _get_split_docs(url)
@@ -40,8 +40,7 @@ def _get_split_docs(url):
 def _get_cached_embeddings(url, api_key):
     embedding_cache_dir = f'./.cache/embeddings/{extract_site_name(url)}'
     
-    if not os.path.exists(embedding_cache_dir):
-        os.makedirs(embedding_cache_dir)
+    os.makedirs(embedding_cache_dir, exist_ok=True)
     
     embedding = OpenAIEmbeddings(
         api_key=api_key,

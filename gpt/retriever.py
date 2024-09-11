@@ -30,9 +30,11 @@ def _get_split_docs(url):
         chunk_overlap=200
     )
     loader = SitemapLoader(web_path=url,
-                           filter_urls=[r"^(.*\/ai-gateway\/).*",
-                                        r"^(.*\/vectorize\/).*",
-                                        r"^(.*\/workers-ai\/).*",],
+                           filter_urls=[
+                                r"^https:\/\/developers\.cloudflare\.com\/ai-gateway\/.*",
+                                r"^https:\/\/developers\.cloudflare\.com\/vectorize\/.*",
+                                r"^https:\/\/developers\.cloudflare\.com\/workers-ai\/.*"
+                            ],
                            parsing_function=_parse_page)
     loader.requests_per_second = 2
     return loader.load_and_split(text_splitter=splitter)

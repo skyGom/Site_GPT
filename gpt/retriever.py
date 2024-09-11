@@ -20,8 +20,9 @@ def _parse_page(soup):
     
 def get_retriever_after_embedding(url, api_key):
     split_docs = _get_split_docs(url)
-    cached_embeddings = _get_cached_embeddings(url, api_key)
-    vector_store = FAISS.from_documents(split_docs, cached_embeddings)
+    # cached_embeddings = _get_cached_embeddings(url, api_key)
+    embeddings = OpenAIEmbeddings(api_key=api_key)
+    vector_store = FAISS.from_documents(split_docs, embeddings)
     return vector_store.as_retriever()
 
 def _get_split_docs(url):
@@ -39,13 +40,13 @@ def _get_split_docs(url):
     loader.requests_per_second = 2
     return loader.load_and_split(text_splitter=splitter)
 
-def _get_cached_embeddings(url, api_key):
-    embedding_cache_dir = f'./.cache/embeddings/{extract_site_name(url)}'
+# def _get_cached_embeddings(url, api_key):
+#     embedding_cache_dir = f'./.cache/embeddings/{extract_site_name(url)}'
     
-    os.makedirs(embedding_cache_dir, exist_ok=True)
+#     os.makedirs(embedding_cache_dir, exist_ok=True)
     
-    embedding = OpenAIEmbeddings(
-        api_key=api_key,
-    )
-    file_store = LocalFileStore(embedding_cache_dir)
-    return CacheBackedEmbeddings(embedding, file_store)
+#     embedding = OpenAIEmbeddings(
+#         api_key=api_key,
+#     )
+#     file_store = LocalFileStore(embedding_cache_dir)
+#     return CacheBackedEmbeddings(embedding, file_store)

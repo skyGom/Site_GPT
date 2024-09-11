@@ -37,7 +37,7 @@ def _get_split_docs(url):
                                 r"^https:\/\/developers\.cloudflare\.com\/workers-ai\/.*"
                             ],
                            parsing_function=_parse_page)
-    loader.requests_per_second = 2
+    loader.requests_per_second = 20
     return loader.load_and_split(text_splitter=splitter)
 
 # def _get_cached_embeddings(url, api_key):
